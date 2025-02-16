@@ -1,0 +1,5 @@
+package com.cts.memberpotal.client;
+
+public interface MemberMicroServiceClient {
+
+}

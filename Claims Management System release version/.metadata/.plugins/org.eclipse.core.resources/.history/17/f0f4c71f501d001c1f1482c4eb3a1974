@@ -1,0 +1,27 @@
+package com.cts.memberpotal.vo;
+
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat; 
+
+public class Premium {
+
+	private Long  memberId;
+	
+
+	private Long  policyId;
+
+	private String policyName;
+	
+	
+	private double premiumDueAmount;
+	
+	private double charges;	
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date dueDate;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date premiumPaidDate;
+
+}

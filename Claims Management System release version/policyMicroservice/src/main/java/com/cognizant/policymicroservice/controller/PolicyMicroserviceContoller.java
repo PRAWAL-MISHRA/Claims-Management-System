@@ -1,0 +1,124 @@
+package com.cognizant.policymicroservice.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.cognizant.policymicroservice.client.AuthClient;
+import com.cognizant.policymicroservice.exception.AuthorizationException;
+import com.cognizant.policymicroservice.exception.MemberPolicyNotFoundException;
+import com.cognizant.policymicroservice.exception.PolicyNotFoundException;
+import com.cognizant.policymicroservice.model.Benefits;
+import com.cognizant.policymicroservice.model.ProviderPolicy;
+import com.cognizant.policymicroservice.repository.BenefitRepo;
+import com.cognizant.policymicroservice.repository.MemberPolicyRepo;
+import com.cognizant.policymicroservice.repository.PolicyRepository;
+import com.cognizant.policymicroservice.service.PolicyService;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+
+/*
+ * This class contains operations for getting the claim providers,eligible benefits,eligible claim amount
+ */
+@RestController
+@Api(value = "policy Microservice Controller", description = "operations related to getting the providers for the claim, getting eligible benfits and also getting the eligible claim Amount")
+@Slf4j
+public class PolicyMicroserviceContoller {
+	@Autowired
+	private PolicyService policyService;
+
+	
+
+	@Autowired
+	private AuthClient authClient;
+	/*
+	 * 
+	 * This method invokes authorizationMicroservice to validate the token
+	 * 
+	 * if token is valid then returns the list of providers which accepts the claim
+	 * for particular policy
+	 * 
+	 * if token is invalid then returns responseEntity of type String(message) and
+	 * status as forbidden
+	 */
+
+	@ApiOperation(value = "List of providers which accepts the claim for particular policy")
+	@RequestMapping(value = "getChainOfProviders/{policyId}", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<List<ProviderPolicy>> getChainOfProviders(@PathVariable("policyId") Integer policyId,
+			@RequestHeader(value = "Authorization", required = false) String token) throws AuthorizationException, PolicyNotFoundException  {
+		log.info("getChainOfProviders Started");
+		if (authClient.getValidity(token)) {
+			log.info("getChainOfProviders token validated");
+			List<ProviderPolicy> providers = policyService.findAllByPolicyIdOrderByLocation(policyId);
+			log.info("getchainofproviders success and ended");
+			return new ResponseEntity<>(providers, HttpStatus.OK);
+		} 
+		else {
+			log.error("Token error");
+			throw new AuthorizationException("Token is either expired or invalid...");
+		}
+	}
+
+	/*
+	 * This method is used to return the benefits
+	 * 
+	 * benefitId is taken as input and output is retrieved from benefit repository
+	 */
+
+
+	@ApiOperation(value = "List of benefits which can be aviled under a particular policy")
+	@RequestMapping(value = "getEligibleBenefits/{policyId}/{memberId}", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<List<Benefits>> getEligibleBenefits(@PathVariable("policyId") Integer policyId,
+			@PathVariable("memberId") Integer memberId,
+			@RequestHeader(value = "Authorization", required = false) String token) throws PolicyNotFoundException, AuthorizationException
+			 {
+		log.info("getEligibleBenefits token started");
+
+		if (authClient.getValidity(token)) {
+			
+				List<Benefits> benifitsList = policyService.findByBenefitId(memberId, policyId);
+				log.info("getEligibleBenefits sucess and ended");
+				return new ResponseEntity<>(benifitsList, HttpStatus.OK);
+		} else {
+			log.error("Token error");
+			throw new AuthorizationException("Token is either expired or invalid...");
+		}
+	}
+
+
+	/*
+	 * 
+	 * This method invokes authorizationMicroservice to validate the token
+	 * 
+	 * if token is valid then returns the amount that a particular member can claim
+	 * 
+	 * if token is invalid then returns responseEntity of type String(message) and
+	 * status as forbidden
+	 */
+	@ApiOperation(value = "Eligible claim amount that a member can claim")
+	@GetMapping(value = "/getClaimAmount/{policyId}/{memberId}/{benefitId}", produces = "application/json")
+	public ResponseEntity<Double> getEligibleClaimAmount(@PathVariable Integer policyId, @PathVariable Integer memberId,
+			@PathVariable Integer benefitId, @RequestHeader(value = "Authorization", required = false) String token) throws  MemberPolicyNotFoundException, AuthorizationException {
+		log.info("getClaimAmount started");
+		if (authClient.getValidity(token)) {
+			log.info("getClaimAmount token validated sucessfully");
+			double capAmount = policyService.findCapAmount(policyId, memberId, benefitId);
+			log.info("getClaimAmount success and ended");
+			return new ResponseEntity<>(capAmount, HttpStatus.OK);
+		} else {
+			log.error("Token error");
+			throw new AuthorizationException("Token is either expired or invalid...");
+		}
+	}
+
+}

@@ -1,0 +1,27 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      docker: 18
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login  --no-include-email --region $AWS_REGION)
+  build:
+    commands:
+      - echo "Entered build phase"
+      - cd ClaimsMemberPortal
+      - mvn compile
+      - mvn package
+      - echo " building docker image"
+      - docker build -t 937883/ClaimsMemberPortal .
+      - docker tag 937883/ClaimsMemberPortal 222512976514.dkr.ecr.us-east-2.amazonaws.com/pracreg:ClaimsMemberPortal
+  post_build:
+    commands:
+    - echo "Entered the post-build phase"
+    - docker push 222512976514.dkr.ecr.us-east-2.amazonaws.com/pracreg:ClaimsMemberPortal
+   
+    - printf '[{"name":"ClaimsMemberPortal-container","imageUri":"%s"}]' 222512976514.dkr.ecr.us-east-2.amazonaws.com/pracreg:ClaimsMemberPortal > taskdefinition.json
+artifacts:
+  files:
+    - ClaimsMemberPortal/taskdefinition.json

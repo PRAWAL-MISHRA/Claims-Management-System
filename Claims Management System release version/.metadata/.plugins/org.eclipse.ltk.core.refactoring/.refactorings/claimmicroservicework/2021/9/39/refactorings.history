@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;AuthClient.java&apos; to &apos;ClaimsMemberPortal/src/main/java/com.cts.memberpotal.client&apos;&#x0D;&#x0A;- Original project: &apos;claimmicroservicework&apos;&#x0D;&#x0A;- Destination element: &apos;ClaimsMemberPortal/src/main/java/com.cts.memberpotal.client&apos;&#x0D;&#x0A;- Original element: &apos;com.cognizant.claimmicroservice.client.AuthClient.java&apos;" description="Copy compilation unit" destination="=ClaimsMemberPortal/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.cts.memberpotal.client" element1="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.cognizant.claimmicroservice.client{AuthClient.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1632472217449" units="1" version="1.0"/>
+</session>

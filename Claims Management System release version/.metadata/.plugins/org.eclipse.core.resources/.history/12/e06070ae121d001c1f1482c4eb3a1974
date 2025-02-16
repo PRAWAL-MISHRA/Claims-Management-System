@@ -1,0 +1,8 @@
+package com.cts.memberpotal.client;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+@FeignClient(name = "Authorizatiion-Microservice", url = "${member.URL}")
+public interface MemberMicroServiceClient {
+
+}

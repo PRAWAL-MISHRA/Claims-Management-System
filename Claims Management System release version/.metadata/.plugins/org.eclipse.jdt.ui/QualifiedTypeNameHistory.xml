@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="org.springframework.cloud.openfeign.EnableFeignClients"/>
+    <fullyQualifiedTypeName name="com.cts.memberpotal.vo.ClaimStatusDTO"/>
+    <fullyQualifiedTypeName name="com.cts.memberpotal.client.MemberMicroServiceClient"/>
+    <fullyQualifiedTypeName name="com.cts.memberpotal.client.AuthClient"/>
+    <fullyQualifiedTypeName name="com.cts.memberpotal.vo.UserToken"/>
+    <fullyQualifiedTypeName name="com.cts.memberpotal.vo.JwtRequest"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ModelAttribute"/>
+    <fullyQualifiedTypeName name="org.springframework.boot.autoconfigure.domain.EntityScan"/>
+    <fullyQualifiedTypeName name="com.cts.memberpotal.vo.UserData"/>
+    <fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
+    <fullyQualifiedTypeName name="com.cts.memberpotal.vo.ViewBillsDTO"/>
+    <fullyQualifiedTypeName name="com.cognizant.membermicroservice.model.MemberPremium"/>
+    <fullyQualifiedTypeName name="com.cts.memberpotal.vo.Premium"/>
+    <fullyQualifiedTypeName name="lombok.Data"/>
+    <fullyQualifiedTypeName name="lombok.AllArgsConstructor"/>
+    <fullyQualifiedTypeName name="lombok.NoArgsConstructor"/>
+    <fullyQualifiedTypeName name="lombok.ToString"/>
+    <fullyQualifiedTypeName name="com.cognizant.claimmicroservice.model.Claim"/>
+    <fullyQualifiedTypeName name="com.cognizant.membermicroservice.dto.Claim"/>
+    <fullyQualifiedTypeName name="com.cts.memberpotal.vo.Claim"/>
+</qualifiedTypeNameHistroy>

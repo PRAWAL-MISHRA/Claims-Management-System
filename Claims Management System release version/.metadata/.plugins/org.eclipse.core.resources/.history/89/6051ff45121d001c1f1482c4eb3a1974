@@ -1,0 +1,4 @@
+server.port=9091
+
+auth.URL=http://localhost:9095/
+claim.URL=http://localhost:8020/member

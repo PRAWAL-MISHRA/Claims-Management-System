@@ -1,0 +1,28 @@
+package com.cts.memberpotal.vo;
+
+import java.util.Date;
+
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Claim {
+
+	private Long claimId;
+	private String claimstatus;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date claimeddate;
+	private String remarks;
+	private Long policyId;
+	private Long memberId;
+	private String hospitalName;
+	private String claimedbenefit;
+	private long claimedamount;
+
+}
